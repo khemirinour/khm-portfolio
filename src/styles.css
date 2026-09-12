@@ -1,0 +1,282 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * IDE portfolio design system — VS Code dark inspired.
+ * All colors in oklch. Never hardcode colors in components.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
+
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: "Archivo Black", "JetBrains Mono", sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-chrome: var(--chrome);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-activitybar: var(--activitybar);
+  --color-editor: var(--editor);
+  --color-tab-active: var(--tab-active);
+  --color-status: var(--status);
+  --color-status-foreground: var(--status-foreground);
+
+  --color-code-comment: var(--code-comment);
+  --color-code-key: var(--code-key);
+  --color-code-string: var(--code-string);
+  --color-code-fn: var(--code-fn);
+  --color-code-kw: var(--code-kw);
+  --color-code-num: var(--code-num);
+  --color-pink: var(--pink);
+
+  --color-mac-close: var(--mac-close);
+  --color-mac-minimize: var(--mac-minimize);
+  --color-mac-maximize: var(--mac-maximize);
+  --color-mac-close-active: var(--mac-close-active);
+  --color-mac-minimize-active: var(--mac-minimize-active);
+  --color-mac-maximize-active: var(--mac-maximize-active);
+  --color-mac-symbol: var(--mac-symbol);
+  --color-mac-ring: var(--mac-ring);
+}
+
+:root {
+  --radius: 0.25rem;
+
+  --background: oklch(0.22 0.004 285);
+  --foreground: oklch(0.88 0.004 285);
+  --card: oklch(0.27 0.005 285);
+  --card-foreground: oklch(0.88 0.004 285);
+  --popover: oklch(0.27 0.005 285);
+  --popover-foreground: oklch(0.88 0.004 285);
+  --primary: oklch(0.56 0.16 250);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.31 0.005 285);
+  --secondary-foreground: oklch(0.88 0.004 285);
+  --muted: oklch(0.3 0.005 285);
+  --muted-foreground: oklch(0.63 0.006 285);
+  --accent: oklch(0.33 0.01 285);
+  --accent-foreground: oklch(0.95 0 0);
+  --destructive: oklch(0.6 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.33 0.006 285);
+  --input: oklch(0.33 0.006 285);
+  --ring: oklch(0.56 0.16 250);
+
+  --chrome: oklch(0.28 0.005 285);
+  --sidebar: oklch(0.235 0.004 285);
+  --sidebar-foreground: oklch(0.75 0.005 285);
+  --sidebar-active: oklch(0.32 0.008 285);
+  --activitybar: oklch(0.21 0.004 285);
+  --editor: oklch(0.25 0.004 285);
+  --tab-active: oklch(0.25 0.004 285);
+  --status: oklch(0.5 0.15 250);
+  --status-foreground: oklch(0.98 0 0);
+
+  --code-comment: oklch(0.72 0.14 155);
+  --code-key: oklch(0.74 0.1 235);
+  --code-string: oklch(0.75 0.09 45);
+  --code-fn: oklch(0.82 0.13 92);
+  --code-kw: oklch(0.72 0.13 310);
+  --code-num: oklch(0.78 0.12 140);
+  --pink: oklch(0.68 0.27 350);
+
+  /* macOS traffic-light colors (real system colors) */
+  --mac-close: oklch(0.65 0.23 25);
+  --mac-minimize: oklch(0.80 0.16 75);
+  --mac-maximize: oklch(0.72 0.19 145);
+  --mac-close-active: oklch(0.55 0.22 25);
+  --mac-minimize-active: oklch(0.70 0.16 75);
+  --mac-maximize-active: oklch(0.62 0.19 145);
+
+  /* macOS desktop night wallpaper */
+  --desktop-top: oklch(0.13 0.03 265);
+  --desktop-mid: oklch(0.16 0.035 272);
+  --desktop-bottom: oklch(0.08 0.02 268);
+  --desktop-glow: oklch(0.28 0.06 288 / 0.45);
+  --desktop-haze: oklch(0.06 0.02 268 / 0.75);
+  --star-dim: oklch(0.95 0.02 250 / 0.85);
+  --star-bright: oklch(1 0.01 250 / 1);
+  --moon-core: oklch(0.97 0.03 250 / 0.55);
+  --moon-halo: oklch(0.7 0.06 265 / 0.18);
+
+  --mac-symbol: oklch(0.16 0.01 285);
+  --mac-ring: oklch(0.12 0.01 285 / 0.28);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-activitybar);
+    color: var(--color-foreground);
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+
+  @media (pointer: fine) {
+    body,
+    body * {
+      cursor: crosshair;
+    }
+    a,
+    button,
+    [role="button"],
+    input,
+    textarea,
+    select {
+      cursor: crosshair;
+    }
+  }
+
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@utility caret {
+  border-right: 2px solid var(--color-pink);
+  animation: caret-blink 1s steps(2, start) infinite;
+}
+
+@keyframes caret-blink {
+  to {
+    border-color: transparent;
+  }
+}
+
+/* macOS desktop wallpaper: night sky */
+@utility desktop-night {
+  background:
+    radial-gradient(120% 80% at 50% 115%, var(--desktop-glow) 0%, transparent 62%),
+    linear-gradient(180deg, var(--desktop-top) 0%, var(--desktop-mid) 55%, var(--desktop-bottom) 100%);
+}
+
+@utility star-field {
+  background-repeat: repeat;
+}
+
+@utility star-field-far {
+  background-image:
+    radial-gradient(1.2px 1.2px at 12% 18%, var(--star-dim) 50%, transparent 60%),
+    radial-gradient(1.2px 1.2px at 68% 8%, var(--star-dim) 50%, transparent 60%),
+    radial-gradient(1px 1px at 34% 62%, var(--star-dim) 50%, transparent 60%),
+    radial-gradient(1.2px 1.2px at 84% 47%, var(--star-dim) 50%, transparent 60%),
+    radial-gradient(1px 1px at 52% 88%, var(--star-dim) 50%, transparent 60%),
+    radial-gradient(1px 1px at 5% 74%, var(--star-dim) 50%, transparent 60%),
+    radial-gradient(1.2px 1.2px at 92% 82%, var(--star-dim) 50%, transparent 60%);
+  background-size: 150px 150px;
+  animation:
+    star-drift 220s linear infinite,
+    star-twinkle-soft 4.5s ease-in-out infinite;
+}
+
+@utility star-field-near {
+  background-image:
+    radial-gradient(2px 2px at 22% 30%, var(--star-bright) 50%, transparent 60%),
+    radial-gradient(1.8px 1.8px at 76% 66%, var(--star-bright) 50%, transparent 60%),
+    radial-gradient(1.6px 1.6px at 46% 12%, var(--star-bright) 50%, transparent 60%),
+    radial-gradient(1.8px 1.8px at 8% 88%, var(--star-bright) 50%, transparent 60%);
+  background-size: 300px 300px;
+  animation:
+    star-drift 140s linear infinite reverse,
+    star-twinkle 3s ease-in-out infinite;
+}
+
+@utility moon-glow {
+  background: radial-gradient(circle, var(--moon-core) 0%, var(--moon-halo) 38%, transparent 70%);
+  filter: blur(2px);
+  animation: moon-breathe 12s ease-in-out infinite alternate;
+}
+
+@utility horizon-haze {
+  background: linear-gradient(180deg, transparent, var(--desktop-haze));
+}
+
+@keyframes star-drift {
+  to {
+    background-position:
+      260px 130px,
+      -220px 180px,
+      180px -160px,
+      -160px -200px,
+      140px 220px;
+  }
+}
+
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  35% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes star-twinkle-soft {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+
+@keyframes moon-breathe {
+  0% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 0.85;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star-field,
+  .moon-glow {
+    animation: none !important;
+  }
+}
