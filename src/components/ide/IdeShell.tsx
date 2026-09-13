@@ -291,10 +291,11 @@ export function IdeShell() {
           </button>
         </div>
 
-        {/* Menu VS Code */}
+        {/* Menu VS Code — masqué sur mobile pour éviter le débordement horizontal ; */}
+        {/* l'essentiel (fichiers, terminal) reste accessible via l'activity bar. */}
         <nav
           aria-label="Menu principal"
-          className="ml-3 flex h-full items-center text-xs text-muted-foreground"
+          className="ml-3 hidden h-full items-center text-xs text-muted-foreground md:flex"
         >
           {menus.map((m) => (
             <div key={m} className="relative h-full">
@@ -417,43 +418,73 @@ export function IdeShell() {
 
         {/* Explorer */}
         {sidebar && (
-          <aside className="hidden w-60 shrink-0 flex-col border-r border-border bg-sidebar md:flex">
-            <div className="px-4 py-3 text-[11px] tracking-[0.18em] text-muted-foreground">
-              EXPLORATEUR
-            </div>
+          <>
+            {/* Sur mobile : tiroir plein écran + fond assombri cliquable pour fermer */}
+            {isMobile && (
+              <button
+                type="button"
+                aria-label="Fermer l'explorateur"
+                onClick={() => setSidebar(false)}
+                className="fixed inset-0 z-40 bg-background/60 md:hidden"
+              />
+            )}
+            <aside
+              className={
+                isMobile
+                  ? "fixed inset-y-0 left-0 z-50 flex w-72 max-w-[80vw] flex-col border-r border-border bg-sidebar shadow-2xl md:hidden"
+                  : "hidden w-60 shrink-0 flex-col border-r border-border bg-sidebar md:flex"
+              }
+            >
+              <div className="flex items-center justify-between px-4 py-3 text-[11px] tracking-[0.18em] text-muted-foreground">
+                EXPLORATEUR
+                {isMobile && (
+                  <button
+                    type="button"
+                    onClick={() => setSidebar(false)}
+                    aria-label="Fermer l'explorateur"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="size-4" />
+                  </button>
+                )}
+              </div>
 
-            <div className="flex items-center gap-1 px-3 text-[11px] tracking-[0.12em] text-foreground/80">
-              <ChevronDown className="size-3" />
-              PORTFOLIO
-            </div>
+              <div className="flex items-center gap-1 px-3 text-[11px] tracking-[0.12em] text-foreground/80">
+                <ChevronDown className="size-3" />
+                PORTFOLIO
+              </div>
 
-            <nav data-tour="sidebar-files" className="flex-1 overflow-y-auto pb-4 pt-1">
-              {files.map((f) => (
-                <button
-                  key={f}
-                  type="button"
-                  title={`Ouvrir ${f}`}
-                  onClick={() => openFile(f)}
-                  className={`flex w-full items-center gap-2 py-1.5 pl-6 pr-4 text-left text-[13px] transition-colors ${
-                    active === f
-                      ? "border-l-2 border-pink bg-sidebar-active text-foreground"
-                      : "border-l-2 border-transparent text-sidebar-foreground hover:bg-sidebar-active hover:text-foreground"
-                  }`}
-                >
-                  <FileIcon
-                    name={f}
-                    className="size-3.5 shrink-0"
-                  />
-                  {f}
-                </button>
-              ))}
-            </nav>
+              <nav data-tour="sidebar-files" className="flex-1 overflow-y-auto pb-4 pt-1">
+                {files.map((f) => (
+                  <button
+                    key={f}
+                    type="button"
+                    title={`Ouvrir ${f}`}
+                    onClick={() => {
+                      openFile(f);
+                      if (isMobile) setSidebar(false);
+                    }}
+                    className={`flex w-full items-center gap-2 py-2 pl-6 pr-4 text-left text-[13px] transition-colors ${
+                      active === f
+                        ? "border-l-2 border-pink bg-sidebar-active text-foreground"
+                        : "border-l-2 border-transparent text-sidebar-foreground hover:bg-sidebar-active hover:text-foreground"
+                    }`}
+                  >
+                    <FileIcon
+                      name={f}
+                      className="size-3.5 shrink-0"
+                    />
+                    {f}
+                  </button>
+                ))}
+              </nav>
 
-            <div className="border-t border-border px-4 py-3 text-[11px] text-muted-foreground">
-              <span className="text-code-kw">✦</span>{" "}
-              {profile.location}
-            </div>
-          </aside>
+              <div className="border-t border-border px-4 py-3 text-[11px] text-muted-foreground">
+                <span className="text-code-kw">✦</span>{" "}
+                {profile.location}
+              </div>
+            </aside>
+          </>
         )}
 
         {/* Editor */}
