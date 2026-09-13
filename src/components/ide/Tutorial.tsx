@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Sparkles, X } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type Step = {
   id: string;
@@ -71,6 +72,7 @@ export function Tutorial({
   const [step, setStep] = useState(0);
   const [rect, setRect] = useState<DOMRect | null>(null);
   const rafRef = useRef<number>();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (open) setStep(0);
@@ -100,8 +102,8 @@ export function Tutorial({
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(locate);
     };
-    window.addEventListener("resize", onViewportChange);
-    window.addEventListener("scroll", onViewportChange, true);
+    window.addEventListener("resize", onViewportChange, { passive: true });
+    window.addEventListener("scroll", onViewportChange, { passive: true, capture: true });
     return () => {
       window.removeEventListener("resize", onViewportChange);
       window.removeEventListener("scroll", onViewportChange, true);
@@ -118,7 +120,7 @@ export function Tutorial({
 
   const current = STEPS[step];
   const isLast = step === STEPS.length - 1;
-  const tooltipWidth = 272;
+  const tooltipWidth = isMobile ? Math.min(240, window.innerWidth - 32) : 272;
   const tooltipHeight = 150;
 
   const tooltipTop = rect

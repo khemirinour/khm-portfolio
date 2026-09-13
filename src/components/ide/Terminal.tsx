@@ -24,10 +24,13 @@ export function Terminal({
   files,
   onOpen,
   onClose,
+  compact = false,
 }: {
   files: string[];
   onOpen: (f: string) => void;
   onClose: () => void;
+  /** Réduit la hauteur du terminal (utile sur mobile pour laisser plus de place au contenu). */
+  compact?: boolean;
 }) {
   const [lines, setLines] = useState<Line[]>([
     { kind: "text", text: `Bienvenue dans le portfolio de ${profile.first} ${profile.last}.`, tone: "ok" },
@@ -94,7 +97,10 @@ export function Terminal({
   };
 
   return (
-    <div className="flex h-56 shrink-0 flex-col border-t border-border bg-editor" onClick={() => inputRef.current?.focus()}>
+    <div
+      className={`flex ${compact ? "h-40" : "h-56"} shrink-0 flex-col border-t border-border bg-editor`}
+      onClick={() => inputRef.current?.focus()}
+    >
       <div className="flex h-8 shrink-0 items-center gap-4 border-b border-border bg-chrome px-3 text-[11px] tracking-[0.15em] text-muted-foreground">
         <span className="flex items-center gap-2 border-b-2 border-pink pb-1 pt-1 text-foreground">
           <TerminalSquare className="size-3.5" /> TERMINAL

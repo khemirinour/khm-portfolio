@@ -29,6 +29,7 @@ import { Crosshair } from "./Crosshair";
 import { profile } from "./data";
 import { NightSky } from "./NightSky";
 import { Tutorial, shouldShowTutorial } from "./Tutorial";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 
 type FileName =
@@ -63,6 +64,7 @@ type MenuItem = {
 const menus: MenuName[] = ["File", "Edit", "View", "Go", "Run", "Terminal", "Help"];
 
 export function IdeShell() {
+  const isMobile = useIsMobile();
   const [active, setActive] = useState<FileName>("home.tsx");
   const [open, setOpen] = useState<FileName[]>(["home.tsx"]);
   const [sidebar, setSidebar] = useState(true);
@@ -194,7 +196,7 @@ export function IdeShell() {
 
  return (
   <div
-    className={`relative min-h-screen overflow-hidden ${
+    className={`relative min-h-screen min-h-[100dvh] overflow-hidden ${
       maximized ? "p-0" : "p-0 md:p-8 lg:p-12"
     }`}
   >
@@ -209,10 +211,12 @@ export function IdeShell() {
 
     {/* Fenêtre VS Code */}
     <div
-      className={`relative z-10 mx-auto flex flex-col overflow-hidden border border-border bg-editor shadow-2xl ${
+      className={`relative z-10 mx-auto flex flex-col overflow-hidden border border-border bg-editor ${
+        isMobile ? "shadow-lg" : "shadow-2xl"
+      } ${
         maximized
-          ? "h-screen max-w-none rounded-none"
-          : "h-screen max-w-[1400px] md:h-[calc(100vh-4rem)] md:rounded-xl lg:h-[calc(100vh-6rem)]"
+          ? "h-screen h-[100dvh] max-w-none rounded-none"
+          : "h-screen h-[100dvh] max-w-[1400px] md:h-[calc(100vh-4rem)] md:rounded-xl lg:h-[calc(100vh-6rem)]"
       }`}
     >
       {/* macOS / VS Code title bar */}
@@ -523,6 +527,7 @@ export function IdeShell() {
               files={files}
               onOpen={openFile}
               onClose={() => setTerminal(false)}
+              compact={isMobile}
             />
           )}
         </main>
