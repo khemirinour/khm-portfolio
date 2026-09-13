@@ -2,8 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { IdeShell } from "@/components/ide/IdeShell";
 
 const title = "Khémiri Nour Elwoujoud";
-const description =
-  "Portfolio de Khémiri Nour Elwoujoud : ingénieure IA/ML, DevSecOps et cybersécurité — expériences, compétences et contact, dans une interface façon éditeur de code.";
+const description = "Portfolio de Khémiri Nour Elwoujoud";
 
 export const Route = createFileRoute("/")({
   head: () => ({
