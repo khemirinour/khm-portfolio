@@ -277,3 +277,17 @@
     animation: none !important;
   }
 }
+
+/*
+ * Perf mobile : animer `background-position` (star-drift) force le navigateur
+ * à repeindre l'élément à chaque frame, ce qui coûte cher sur un GPU mobile,
+ * surtout sur un élément plein écran comme .star-field-far (toujours affiché,
+ * y compris sur téléphone). On coupe cette dérive sous 768px et on garde
+ * uniquement le scintillement (simple animation d'opacité, quasi gratuite
+ * car gérée par le compositeur plutôt que repeinte).
+ */
+@media (max-width: 768px) {
+  .star-field-far {
+    animation: star-twinkle-soft 4.5s ease-in-out infinite;
+  }
+}
