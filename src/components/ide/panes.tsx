@@ -67,7 +67,7 @@ function Typewriter({ text }: { text: string }) {
 const links = [
   { icon: Github, label: "GitHub", href: profile.github },
   { icon: Linkedin, label: "LinkedIn", href: profile.linkedin },
-  { icon: Globe, label: "Netlify", href: profile.site },
+  { icon: Globe, label: "portfolio", href: profile.site },
   { icon: Trophy, label: "Kaggle", href: profile.kaggle },
   { icon: Mail, label: "Email", href: `mailto:${profile.email}` },
 ];
