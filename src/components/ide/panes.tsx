@@ -336,7 +336,7 @@ export function ContactPane() {
     { icon: Phone, prop: "téléphone", value: profile.phone, href: `tel:+21622880524` },
     { icon: Github, prop: "github", value: "github.com/khemirinour", href: profile.github },
     { icon: Linkedin, prop: "linkedin", value: "nour-woujoud-khémiri", href: profile.linkedin },
-    { icon: Globe, prop: "site", value: "khemirinourportfolio.netlify.app", href: profile.site },
+    { icon: Globe, prop: "site", value: "khemirinourportfolio.vercel.app", href: profile.site },
     { icon: Trophy, prop: "kaggle", value: "kaggle.com/khmirinourelwoujoud", href: profile.kaggle },
     {
       icon: FileText,

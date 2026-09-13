@@ -8,7 +8,7 @@ export const profile = {
   phone: "+216 22 880 524",
   github: "https://github.com/khemirinour",
   linkedin: "https://www.linkedin.com/in/nour-elwoujoud-khemiri-0463a3209/",
-  site: "https://khemirinourportfolio.netlify.app/",
+  site: "https://khemirinourportfolio.vercel.app/",
   kaggle: "https://www.kaggle.com/khmirinourelwoujoud",
   intro:
     "Passionnée par l'Intelligence Artificielle, le Machine Learning et le DevSecOps, avec des compétences en développement logiciel, systèmes & réseaux. Rigoureuse, autonome et orientée résolution de problèmes.",
