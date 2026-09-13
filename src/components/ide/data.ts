@@ -1,7 +1,7 @@
 export const profile = {
   first: "Khémiri",
   last: "Nour Elwoujoud",
-  tags: ["Ingénieure IA / ML", "DevSecOps", "Full Stack Dev", "Cybersécurité"],
+  tags: ["Ingénieure IA / ML", "Full Stack Developer"],
   typed: "Des systèmes intelligents, sûrs et scalables",
   location: "Mahdia, Tunisie",
   email: "Khemirinour334@gmail.com",
