@@ -200,6 +200,14 @@ export function IdeShell() {
       maximized ? "p-0" : "p-0 md:p-8 lg:p-12"
     }`}
   >
+    {/* Lien d'évitement clavier : invisible sauf au focus (Tab) */}
+    <a
+      href="#main-content"
+      className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-sm focus:bg-primary focus:px-4 focus:py-2 focus:text-xs focus:text-primary-foreground"
+    >
+      Aller au contenu principal
+    </a>
+
     {/* Background extérieur : ciel étoilé */}
     <div className="pointer-events-none fixed inset-0 z-0">
       <NightSky />
@@ -393,11 +401,11 @@ export function IdeShell() {
               <Files className="size-5" />
             </button>
 
-            <SearchIcon className="size-5 text-muted-foreground" />
+            <SearchIcon aria-hidden className="size-5 text-muted-foreground" />
 
-            <GitBranch className="size-5 text-muted-foreground" />
+            <GitBranch aria-hidden className="size-5 text-muted-foreground" />
 
-            <Sparkles className="size-5 text-muted-foreground" />
+            <Sparkles aria-hidden className="size-5 text-muted-foreground" />
 
             <button
               type="button"
@@ -413,7 +421,7 @@ export function IdeShell() {
             </button>
           </div>
 
-          <Settings className="size-5 text-muted-foreground" />
+          <Settings aria-hidden className="size-5 text-muted-foreground" />
         </div>
 
         {/* Explorer */}
@@ -488,7 +496,7 @@ export function IdeShell() {
         )}
 
         {/* Editor */}
-        <main className="flex min-w-0 flex-1 flex-col bg-editor">
+        <main id="main-content" tabIndex={-1} className="flex min-w-0 flex-1 flex-col bg-editor outline-none">
           {/* Tabs */}
           <div data-tour="tabs" className="flex h-9 shrink-0 items-stretch overflow-x-auto border-b border-border bg-chrome">
             {open.map((f) => (
@@ -568,12 +576,12 @@ export function IdeShell() {
       <div className="flex h-6 shrink-0 items-center justify-between bg-status px-3 text-[11px] text-status-foreground">
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1">
-            <GitBranch className="size-3" />
+            <GitBranch aria-hidden className="size-3" />
             main
           </span>
 
           <span className="flex items-center gap-1">
-            <Circle className="size-2" />
+            <Circle aria-hidden className="size-2" />
             Portfolio de Nour
           </span>
         </div>
@@ -589,11 +597,11 @@ export function IdeShell() {
             className="flex items-center gap-1 tabular-nums"
             aria-label={`Heure locale ${time}`}
           >
-            <Clock3 className="size-3" />
+            <Clock3 aria-hidden className="size-3" />
             {time}
           </span>
 
-          <Bell className="size-3" />
+          <Bell aria-hidden className="size-3" />
         </div>
       </div>
     </div>

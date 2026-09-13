@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { profile } from "@/components/ide/data";
 
 function NotFoundComponent() {
   return (
@@ -90,7 +91,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content: "Ingénieure IA/ML, DevSecOps et cybersécurité.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://khemirinourportfolio.vercel.app/image.png" },
+      { property: "og:url", content: profile.site },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://khemirinourportfolio.vercel.app/image.png" },
     ],
     links: [
       {
@@ -114,10 +118,31 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: `${profile.first} ${profile.last}`,
+    jobTitle: profile.tags.join(", "),
+    email: profile.email,
+    telephone: profile.phone,
+    url: profile.site,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: profile.location,
+    },
+    sameAs: [profile.github, profile.linkedin, profile.kaggle].filter(Boolean),
+  };
+
   return (
-    <html lang="en">
+    <html lang="fr">
       <head>
         <HeadContent />
+        {/* Données structurées : aide Google à afficher une fiche pro dans les résultats */}
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
       </head>
       <body>
         {children}

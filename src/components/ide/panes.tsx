@@ -290,7 +290,7 @@ export function ExperiencePane() {
                 </li>
               ))}
             </ul>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap items-center gap-2">
               {e.stack.map((s) => (
                 <span
                   key={s}
@@ -299,6 +299,16 @@ export function ExperiencePane() {
                   {s}
                 </span>
               ))}
+              {e.repo && (
+                <a
+                  href={e.repo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="ml-auto inline-flex items-center gap-1.5 text-xs text-code-string underline-offset-4 hover:underline"
+                >
+                  <Github className="size-3.5" /> Voir le code
+                </a>
+              )}
             </div>
           </article>
         ))}
@@ -322,13 +332,23 @@ export function ProjectsPane() {
             <p className="mt-2 text-xs text-muted-foreground">
               {e.company} · {e.period}
             </p>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap items-center gap-2">
               {e.stack.map((s) => (
                 <span key={s} className="text-[11px] text-code-string">
                   #{s.toLowerCase().replace(/[^a-z0-9]/g, "")}
                 </span>
               ))}
             </div>
+            {e.repo && (
+              <a
+                href={e.repo}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 inline-flex items-center gap-1.5 text-xs text-pink underline-offset-4 hover:underline"
+              >
+                <Github className="size-3.5" /> Voir sur GitHub
+              </a>
+            )}
           </div>
         ))}
       </div>
@@ -391,6 +411,66 @@ export function ContactPane() {
         ))}
       </div>
       <p className="mt-4 text-muted-foreground">{"}"}</p>
+
+      {/*
+        Formulaire de contact via Formspree (gratuit) : crée un formulaire sur
+        https://formspree.io, remplace FORM_ID ci-dessous par le tien.
+        Sans ça, seul le mailto ci-dessus fonctionne (ce qui n'ouvre pas
+        d'application mail sur tous les appareils).
+      */}
+      <div className="mt-10 rounded-sm border border-border bg-card p-5">
+        <p className="text-xs text-code-comment">{"// envoyer un message directement"}</p>
+        <form
+          action="https://formspree.io/f/FORM_ID"
+          method="POST"
+          className="mt-4 space-y-3"
+        >
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div>
+              <label htmlFor="contact-name" className="mb-1 block text-[11px] text-muted-foreground">
+                Nom
+              </label>
+              <input
+                id="contact-name"
+                name="name"
+                type="text"
+                required
+                className="w-full rounded-sm border border-border bg-editor px-3 py-2 text-sm text-foreground outline-none focus:border-pink"
+              />
+            </div>
+            <div>
+              <label htmlFor="contact-email" className="mb-1 block text-[11px] text-muted-foreground">
+                Email
+              </label>
+              <input
+                id="contact-email"
+                name="email"
+                type="email"
+                required
+                className="w-full rounded-sm border border-border bg-editor px-3 py-2 text-sm text-foreground outline-none focus:border-pink"
+              />
+            </div>
+          </div>
+          <div>
+            <label htmlFor="contact-message" className="mb-1 block text-[11px] text-muted-foreground">
+              Message
+            </label>
+            <textarea
+              id="contact-message"
+              name="message"
+              rows={4}
+              required
+              className="w-full resize-none rounded-sm border border-border bg-editor px-3 py-2 text-sm text-foreground outline-none focus:border-pink"
+            />
+          </div>
+          <button
+            type="submit"
+            className="rounded-sm bg-primary px-4 py-2 text-xs text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            Envoyer le message
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

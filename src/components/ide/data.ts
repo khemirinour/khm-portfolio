@@ -119,6 +119,8 @@ export const experiences = [
       "Pipeline d'évaluation automatisé de la robustesse adversariale.",
     ],
     stack: ["Python", "PyTorch", "TensorFlow", "Docker"],
+    // TODO: remplace par le vrai lien du dépôt si le projet est public
+    repo: "https://github.com/khemirinour/Detection-Attaques-Adversariales-pour-les-Mod-les-de-Classification-d-Images",
   },
   {
     company: "Clinisys",
@@ -132,6 +134,7 @@ export const experiences = [
       "Pipeline CI/CD complet (Docker Compose, GitLab, Prometheus, Grafana, SonarQube), réduisant le temps de déploiement de 40 %.",
     ],
     stack: [".NET Core", "MySQL", "GitLab CI", "Grafana"],
+    repo: " https://github.com/khemirinour/Planification-du-Temps-pour-Clinique",
   },
   {
     company: "Datasphera",
@@ -145,6 +148,7 @@ export const experiences = [
       "Optimisation des bases multi-locataires avec PostgreSQL et Spring Boot.",
     ],
     stack: ["Flask", "PostgreSQL", "Spring Boot", "AWS"],
+    repo: "",
   },
 ];
 
