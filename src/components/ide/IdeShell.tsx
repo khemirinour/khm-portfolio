@@ -12,6 +12,7 @@ import {
   TerminalSquare,
   Clock3,
   Check,
+  HelpCircle,
 } from "lucide-react";
 import {
   AboutPane,
@@ -27,6 +28,7 @@ import { Terminal } from "./Terminal";
 import { Crosshair } from "./Crosshair";
 import { profile } from "./data";
 import { NightSky } from "./NightSky";
+import { Tutorial, shouldShowTutorial } from "./Tutorial";
 
 
 type FileName =
@@ -68,15 +70,62 @@ export function IdeShell() {
   const [activeMenu, setActiveMenu] = useState<MenuName | null>(null);
   const [maximized, setMaximized] = useState(false);
   const [time, setTime] = useState("");
+  const [tutorialOpen, setTutorialOpen] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateTime = () =>
       setTime(new Intl.DateTimeFormat("fr-TN", { hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" }).format(new Date()));
     updateTime();
-    const timer = window.setInterval(updateTime, 1000);
-    return () => window.clearInterval(timer);
+
+    // Perf mobile : on coupe l'intervalle quand l'onglet n'est pas visible
+    // (économise CPU/batterie au lieu de faire tourner un setInterval en fond en permanence).
+    let timer: number | undefined;
+    const start = () => {
+      if (timer) return;
+      timer = window.setInterval(updateTime, 1000);
+    };
+    const stop = () => {
+      if (timer) {
+        window.clearInterval(timer);
+        timer = undefined;
+      }
+    };
+    const onVisibility = () => {
+      if (document.hidden) stop();
+      else {
+        updateTime();
+        start();
+      }
+    };
+    start();
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      stop();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, []);
+
+  // Petit tutoriel affiché automatiquement lors de la première visite
+  // (mémorisé en localStorage par le composant Tutorial, ne réapparaît pas ensuite).
+  useEffect(() => {
+    if (!shouldShowTutorial()) return;
+    const id = window.setTimeout(() => {
+      setSidebar(true);
+      setTerminal(true);
+      setTutorialOpen(true);
+    }, 900);
+    return () => window.clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const replayTutorial = () => {
+    setSidebar(true);
+    setTerminal(true);
+    setActive("home.tsx");
+    setOpen((prev) => (prev.includes("home.tsx") ? prev : [...prev, "home.tsx"]));
+    window.setTimeout(() => setTutorialOpen(true), 250);
+  };
 
   useEffect(() => {
     const closeMenu = (event: MouseEvent) => {
@@ -155,6 +204,8 @@ export function IdeShell() {
     </div>
 
     <Crosshair />
+
+    <Tutorial open={tutorialOpen} onOpenChange={setTutorialOpen} />
 
     {/* Fenêtre VS Code */}
     <div
@@ -306,6 +357,17 @@ export function IdeShell() {
           <SearchIcon className="size-3" />
           khemiri-nour : portfolio
         </div>
+
+        {/* Bouton d'aide : relance la visite guidée à tout moment */}
+        <button
+          type="button"
+          onClick={replayTutorial}
+          title="Revoir le tutoriel"
+          aria-label="Revoir le tutoriel de visite du portfolio"
+          className="ml-auto flex size-6 shrink-0 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-pink hover:text-pink"
+        >
+          <HelpCircle className="size-3.5" />
+        </button>
       </div>
 
       {/* Contenu principal */}
@@ -315,8 +377,10 @@ export function IdeShell() {
           <div className="flex flex-col items-center gap-5">
             <button
               type="button"
+              data-tour="activity-explorer"
               onClick={() => setSidebar((s) => !s)}
               aria-label="Explorateur"
+              title="Afficher / masquer l'explorateur de fichiers"
               className={
                 sidebar ? "text-pink" : "text-muted-foreground"
               }
@@ -332,8 +396,10 @@ export function IdeShell() {
 
             <button
               type="button"
+              data-tour="activity-terminal"
               onClick={() => setTerminal((t) => !t)}
               aria-label="Terminal"
+              title="Afficher / masquer le terminal"
               className={
                 terminal ? "text-pink" : "text-muted-foreground"
               }
@@ -357,11 +423,12 @@ export function IdeShell() {
               PORTFOLIO
             </div>
 
-            <nav className="flex-1 overflow-y-auto pb-4 pt-1">
+            <nav data-tour="sidebar-files" className="flex-1 overflow-y-auto pb-4 pt-1">
               {files.map((f) => (
                 <button
                   key={f}
                   type="button"
+                  title={`Ouvrir ${f}`}
                   onClick={() => openFile(f)}
                   className={`flex w-full items-center gap-2 py-1.5 pl-6 pr-4 text-left text-[13px] transition-colors ${
                     active === f
@@ -388,7 +455,7 @@ export function IdeShell() {
         {/* Editor */}
         <main className="flex min-w-0 flex-1 flex-col bg-editor">
           {/* Tabs */}
-          <div className="flex h-9 shrink-0 items-stretch overflow-x-auto border-b border-border bg-chrome">
+          <div data-tour="tabs" className="flex h-9 shrink-0 items-stretch overflow-x-auto border-b border-border bg-chrome">
             {open.map((f) => (
               <div
                 key={f}

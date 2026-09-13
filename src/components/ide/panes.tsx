@@ -10,6 +10,7 @@ import {
   Linkedin,
   Mail,
   MapPin,
+  MousePointerClick,
   Phone,
   Globe,
   Terminal,
@@ -101,22 +102,32 @@ export function HomePane({ onOpen }: { onOpen: (f: string) => void }) {
         {profile.intro}
       </p>
 
-      <div className="mt-8 flex flex-wrap gap-3">
+      <p className="mt-8 flex items-center gap-1.5 text-[11px] tracking-wide text-muted-foreground">
+        <MousePointerClick className="size-3.5 text-pink" aria-hidden />
+        Astuce : ces boutons sont cliquables, essayez-les !
+      </p>
+      <div data-tour="home-actions" className="mt-2 flex flex-wrap gap-3">
         <button
+          type="button"
           onClick={() => onOpen("experience.ts")}
-          className="rounded-sm bg-primary px-4 py-2 text-xs text-primary-foreground transition-opacity hover:opacity-90"
+          title="Ouvrir la section Expériences"
+          className="rounded-sm bg-primary px-4 py-2 text-xs text-primary-foreground transition-opacity hover:opacity-90 active:opacity-80"
         >
           {"</> Expériences"}
         </button>
         <button
+          type="button"
           onClick={() => onOpen("skills.json")}
-          className="rounded-sm border border-border px-4 py-2 text-xs text-foreground transition-colors hover:bg-accent"
+          title="Ouvrir la section Compétences"
+          className="rounded-sm border border-border px-4 py-2 text-xs text-foreground transition-colors hover:bg-accent active:bg-accent/70"
         >
           {"{ } Compétences"}
         </button>
         <button
+          type="button"
           onClick={() => onOpen("contact.css")}
-          className="rounded-sm border border-border px-4 py-2 text-xs text-foreground transition-colors hover:bg-accent"
+          title="Ouvrir la section Contact"
+          className="rounded-sm border border-border px-4 py-2 text-xs text-foreground transition-colors hover:bg-accent active:bg-accent/70"
         >
           ✉ Contact
         </button>
@@ -125,6 +136,7 @@ export function HomePane({ onOpen }: { onOpen: (f: string) => void }) {
           download="CV-Khemiri-Nour-Elwoujoud.pdf"
           target="_blank"
           rel="noreferrer"
+          title="Télécharger le CV au format PDF"
           className="inline-flex items-center gap-2 rounded-sm border border-pink px-4 py-2 text-xs text-pink transition-colors hover:bg-pink hover:text-primary-foreground"
         >
           <FileText className="size-3.5" /> CV (PDF)
