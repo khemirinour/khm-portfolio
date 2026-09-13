@@ -87,8 +87,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Khémiri Nour Elwoujoud — Portfolio" },
       {
         property: "og:description",
-        content:
-          "Ingénieure IA/ML, DevSecOps et cybersécurité — expériences, compétences et contact.",
+        content: "Ingénieure IA/ML, DevSecOps et cybersécurité.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
