@@ -421,7 +421,7 @@ export function ContactPane() {
       <div className="mt-10 rounded-sm border border-border bg-card p-5">
         <p className="text-xs text-code-comment">{"// envoyer un message directement"}</p>
         <form
-          action="https://formspree.io/f/FORM_ID"
+          action="https://formspree.io/f/mgaejkvl"
           method="POST"
           className="mt-4 space-y-3"
         >
