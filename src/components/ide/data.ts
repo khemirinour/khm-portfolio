@@ -151,7 +151,58 @@ export const experiences = [
     repo: "",
   },
 ];
-
+export const projects = [
+  {
+    role: "Développeuse Full Stack — Projet Marketplace",
+    summary:
+      "Développement d'une plateforme marketplace moderne basée sur une architecture Nx Monorepo et des microservices NestJS.",
+    stack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "NestJS",
+      "Nx Monorepo",
+      "Tailwind CSS",
+      "Docker",
+      "Swagger",
+    ],
+    repo: "https://github.com/khemirinour/Youfizz",
+  },
+  {
+    role: "Développeuse IA & Cybersécurité — PFE Master",
+    summary:
+      "Développement d'un pipeline automatique pour la détection d'attaques adversariales sur des modèles de classification d'images.",
+    bullets: [
+      "Implémentation d'attaques (FGSM, PGD, BIM, etc.) et de défenses pour renforcer la robustesse des modèles de classification d'images.",
+      "Pipeline d'évaluation automatisé de la robustesse adversariale.",
+    ],
+    stack: ["Python", "PyTorch", "TensorFlow", "Docker"],
+    // TODO: remplace par le vrai lien du dépôt si le projet est public
+    repo: "https://github.com/khemirinour/Detection-Attaques-Adversariales-pour-les-Mod-les-de-Classification-d-Images",
+  },
+  {
+    role: "Développeuse Full Stack — PFE Master",
+    summary:
+      "Développement d'une application de planification des emplois du temps avec intégration CI/CD.",
+    bullets: [
+      "Application web .NET / Bootstrap / MySQL automatisant la gestion des emplois du temps, réduisant les erreurs manuelles de 60 %.",
+      "Pipeline CI/CD complet (Docker Compose, GitLab, Prometheus, Grafana, SonarQube), réduisant le temps de déploiement de 40 %.",
+    ],
+    stack: [".NET Core", "MySQL", "GitLab CI", "Grafana"],
+    repo: " https://github.com/khemirinour/Planification-du-Temps-pour-Clinique",
+  },
+  {
+    role: "Développeuse Python — PFE Licence",
+    summary: "Développement d'un système multi-locataire de labellisation des textes.",
+    bullets: [
+      "Système de classification multi-locataire avec Flask (précision : 99 %).",
+      "APIs automatisées et déployées via Docker sur AWS (disponibilité : 96,9 %).",
+      "Optimisation des bases multi-locataires avec PostgreSQL et Spring Boot.",
+    ],
+    stack: ["Flask", "PostgreSQL", "Spring Boot", "AWS"],
+    repo: "",
+  },
+];
 export const education = [
   {
     degree: "Master professionnel co-construit en Cybersécurité et Industrie Intelligente",
