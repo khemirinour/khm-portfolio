@@ -27,6 +27,7 @@ import {
   education,
   experiences,
   languages,
+  projects,
   profile,
   skills,
   stats,
@@ -324,24 +325,41 @@ export function ProjectsPane() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 md:px-10">
       <p className="text-code-comment">{"// projects.js"}</p>
+
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        {experiences.map((e, i) => (
-          <div key={e.company} className="rounded-sm border border-border bg-card p-5">
+        {projects.map((e, i) => (
+          <div
+            key={e.company}
+            className="rounded-sm border border-border bg-card p-5"
+          >
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Terminal className="size-3.5 text-code-fn" />
               projet_{String(i + 1).padStart(2, "0")}
             </div>
-            <h3 className="mt-3 text-sm text-foreground">{e.summary}</h3>
-            <p className="mt-2 text-xs text-muted-foreground">
-              {e.company} · {e.period}
+
+            <h3 className="mt-3 text-sm text-foreground">
+              {e.company}
+            </h3>
+
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">
+              {e.summary}
             </p>
+
+            <p className="mt-2 text-xs text-code-comment">
+              {e.period}
+            </p>
+
             <div className="mt-4 flex flex-wrap items-center gap-2">
               {e.stack.map((s) => (
-                <span key={s} className="text-[11px] text-code-string">
+                <span
+                  key={s}
+                  className="text-[11px] text-code-string"
+                >
                   #{s.toLowerCase().replace(/[^a-z0-9]/g, "")}
                 </span>
               ))}
             </div>
+
             {e.repo && (
               <a
                 href={e.repo}
@@ -349,7 +367,8 @@ export function ProjectsPane() {
                 rel="noreferrer"
                 className="mt-3 inline-flex items-center gap-1.5 text-xs text-pink underline-offset-4 hover:underline"
               >
-                <Github className="size-3.5" /> Voir sur GitHub
+                <Github className="size-3.5" />
+                Voir sur GitHub
               </a>
             )}
           </div>
