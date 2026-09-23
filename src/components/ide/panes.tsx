@@ -26,12 +26,13 @@ import {
   clubs,
   education,
   experiences,
-  languages,
   projects,
+  languages,
   profile,
   skills,
   stats,
 } from "./data";
+import { CharacterAvatar } from "./CharacterAvatar";
 
 export function CodeLines({ children }: { children: React.ReactNode[] }) {
   return (
@@ -83,10 +84,14 @@ export function HomePane({ onOpen }: { onOpen: (f: string) => void }) {
       <p className="text-code-comment">
         {"// hello world !! Bienvenue sur mon portfolio"}
       </p>
-      <h1 className="mt-5 font-display text-5xl leading-[0.95] tracking-tight md:text-7xl">
-        <span className="block text-foreground">{profile.first}</span>
-        <span className="block text-pink">{profile.last}</span>
-      </h1>
+
+      <div className="mt-5 flex flex-wrap items-start gap-4 md:flex-nowrap">
+        <CharacterAvatar />
+        <h1 className="font-display text-5xl leading-[0.95] tracking-tight md:text-7xl">
+          <span className="block text-foreground">{profile.first}</span>
+          <span className="block text-pink">{profile.last}</span>
+        </h1>
+      </div>
       <div className="mt-6 h-px w-full bg-border" />
       <div className="mt-5 flex flex-wrap gap-2">
         {profile.tags.map((t) => (
@@ -377,7 +382,6 @@ export function ProjectsPane() {
     </div>
   );
 }
-
 export function ContactPane() {
   const rows: {
     icon: typeof Mail;
