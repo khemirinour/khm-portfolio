@@ -1,7 +1,7 @@
 export const profile = {
   first: "Khémiri",
   last: "Nour Elwoujoud",
-  tags: ["Ingénieure IA / ML", "Full Stack Developer"],
+  tags: ["Full Stack Developer", "Passionnée par l’IA et le Machine Learning"],
   typed: "Des systèmes intelligents, sûrs et scalables",
   location: "Mahdia, Tunisie",
   email: "Khemirinour334@gmail.com",
@@ -21,23 +21,6 @@ export const stats = [
   { value: "∞", label: "CURIOSITÉ" },
 ];
 
-export const tools = [
-  "Visual Studio Code",
-  "Android Studio",
-  "IntelliJ",
-  "Anaconda Navigator (Jupyter, PyCharm, Spyder)",
-  "Eclipse (JDI, JDK)",
-  "Code::Blocks",
-  "Overleaf",
-  "StarUML",
-  "Packet Tracer",
-  "Node-RED",
-  "VMware",
-  "VirtualBox",
-  "Sandboxie",
-  "Wireshark",
-];
-
 export const skills: { key: string; items: string[] }[] = [
   {
     key: "developpement",
@@ -45,7 +28,7 @@ export const skills: { key: string; items: string[] }[] = [
       "Python",
       "Django",
       "Flask",
-      "React",
+      "React js",
       "JavaScript",
       "Java",
       "C",
@@ -54,11 +37,40 @@ export const skills: { key: string; items: string[] }[] = [
       "Angular",
       "Bootstrap",
     ],
-  },
-  {
-    key: "ia_machine_learning",
-    items: ["LLM", "TensorFlow", "PyTorch", "Scikit-learn"],
-  },
+  },{
+  key: "ia_machine_learning",
+  category: "Machine Learning / Deep Learning",
+  items: [
+    "TensorFlow",
+    "PyTorch",
+    "Scikit-learn",
+    "Keras",
+    "CNN (Convolutional Neural Networks)",
+    "ANN (Artificial Neural Networks)",
+    "RNN (Recurrent Neural Networks)",
+    "LSTM",
+    "Transfer Learning",
+  ],
+},
+{
+  key: "llm_rag",
+  category: "LLM et RAG",
+  items: [
+    "LLM",
+        "RAG (Retrieval-Augmented Generation)",
+
+    "Hugging Face",
+    "LangChain",
+    "ChromaDB",
+    "Ollama",
+    "Mistral AI",
+    "Sentence Transformers",
+    "FAISS",
+    "LlamaIndex",
+    "Embeddings",
+    "Prompt Engineering",
+  ],
+},
   {
     key: "devops_devsecops",
     items: [
@@ -72,6 +84,7 @@ export const skills: { key: string; items: string[] }[] = [
       "Grafana",
       "Prometheus",
       "Burp Suite",
+      "ngrok",
     ],
   },
   {
@@ -91,9 +104,28 @@ export const skills: { key: string; items: string[] }[] = [
     items: ["Windows", "Kali Linux", "Parrot OS", "Ubuntu", "Instant Contiki"],
   },
   {
-    key: "outils",
-    items: tools,
-  },
+key: "outils",
+items: [
+"Visual Studio Code",
+"Android Studio",
+"IntelliJ",
+"Anaconda Navigator (Jupyter, PyCharm, Spyder)",
+"Eclipse (JDI, JDK)",
+"Code::Blocks",
+"StarUML",
+"Packet Tracer",
+"Node-RED",
+"VMware",
+"VirtualBox",
+"Sandboxie",
+"Wireshark",
+"LaTeX ( Overleaf )",
+"Canva",
+"Antigravity"
+],
+},
+
+
   {
     key: "reseaux_systemes",
     items: [
@@ -133,7 +165,7 @@ export const experiences = [
       "Application web .NET / Bootstrap / MySQL automatisant la gestion des emplois du temps, réduisant les erreurs manuelles de 60 %.",
       "Pipeline CI/CD complet (Docker Compose, GitLab, Prometheus, Grafana, SonarQube), réduisant le temps de déploiement de 40 %.",
     ],
-    stack: [".NET Core", "MySQL", "GitLab CI", "Grafana"],
+    stack: [".NET Core", "MySQL", "CI/CD", "Bootstrap"],
     repo: " https://github.com/khemirinour/Planification-du-Temps-pour-Clinique",
   },
   {
@@ -147,7 +179,7 @@ export const experiences = [
       "APIs automatisées et déployées via Docker sur AWS (disponibilité : 96,9 %).",
       "Optimisation des bases multi-locataires avec PostgreSQL et Spring Boot.",
     ],
-    stack: ["Flask", "PostgreSQL", "Spring Boot", "AWS"],
+    stack: ["Flask", "PostgreSQL", "Spring Boot", "Docker", "AWS"],
     repo: "",
   },
 ];
@@ -176,7 +208,7 @@ export const projects = [
       "Implémentation d'attaques (FGSM, PGD, BIM, etc.) et de défenses pour renforcer la robustesse des modèles de classification d'images.",
       "Pipeline d'évaluation automatisé de la robustesse adversariale.",
     ],
-    stack: ["Python", "PyTorch", "TensorFlow", "Docker"],
+    stack: ["Python", "Flask", "TensorFlow", "Docker", "ngrok"],
     // TODO: remplace par le vrai lien du dépôt si le projet est public
     repo: "https://github.com/khemirinour/Detection-Attaques-Adversariales-pour-les-Mod-les-de-Classification-d-Images",
   },

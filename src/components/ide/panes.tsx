@@ -510,7 +510,7 @@ export function ReadmePane() {
       <p className="mt-4 text-sm leading-7 text-muted-foreground">{profile.intro}</p>
       <h2 className="mt-8 text-sm text-pink">## Stack principale</h2>
       <ul className="mt-3 space-y-1 text-sm text-muted-foreground">
-        {["Python / PyTorch / TensorFlow", "Docker / Kubernetes / GitLab CI", "PostgreSQL / MySQL / Spark", "Pentesting / OWASP / SOC"].map(
+        {["Python / LLM / IA", "Docker / Kubernetes / GitLab CI","Pentesting / Déploiement / Audits" ].map(
           (s) => (
             <li key={s}>- {s}</li>
           ),

@@ -193,6 +193,16 @@ export function CharacterAvatar({
 
   return (
     <div className={`relative shrink-0 ${className}`} style={{ width: haloSize, height: haloSize }}>
+      {/* Halo d'ambiance : la même image, floutée et légèrement agrandie,
+          posée derrière. Comme elle a la même transparence, le flou suit
+          sa vraie silhouette au lieu de dessiner un cercle générique. */}
+      <img
+        src="/frames/center.webp"
+        alt=""
+        aria-hidden
+        className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-contain opacity-70 blur-xl"
+      />
+
       <div
         ref={wrapRef}
         aria-hidden
