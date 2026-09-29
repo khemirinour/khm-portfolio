@@ -439,15 +439,15 @@ export function ContactPane() {
       <p className="mt-4 text-muted-foreground">{"}"}</p>
 
       {/*
-        Formulaire de contact via Formspree (gratuit) : crée un formulaire sur
-        https://formspree.io, remplace FORM_ID ci-dessous par le tien.
+        Formulaire de contact via expériences, compétences et contact, dans une interface façon éditeur de code.pree (gratuit) : crée un formulaire sur
+        https://expériences, compétences et contact, dans une interface façon éditeur de code.pree.io, remplace FORM_ID ci-dessous par le tien.
         Sans ça, seul le mailto ci-dessus fonctionne (ce qui n'ouvre pas
         d'application mail sur tous les appareils).
       */}
       <div className="mt-10 rounded-sm border border-border bg-card p-5">
         <p className="text-xs text-code-comment">{"// envoyer un message directement"}</p>
         <form
-          action="https://formspree.io/f/FORM_ID"
+          action="https://expériences, compétences et contact, dans une interface façon éditeur de code.pree.io/f/xzezodoq"
           method="POST"
           className="mt-4 space-y-3"
         >
