@@ -180,6 +180,125 @@ export function HomePane({ onOpen }: { onOpen: (f: string) => void }) {
     </div>
   );
 }
+export function ContactPane() {
+  const rows: {
+    icon: typeof Mail;
+    prop: string;
+    value: string;
+    href?: string;
+    download?: string;
+  }[] = [
+    { icon: Mail, prop: "email", value: profile.email, href: `mailto:${profile.email}` },
+    { icon: Phone, prop: "téléphone", value: profile.phone, href: `tel:+21622880524` },
+    { icon: Github, prop: "github", value: "github.com/khemirinour", href: profile.github },
+    { icon: Linkedin, prop: "linkedin", value: "nour-woujoud-khémiri", href: profile.linkedin },
+    { icon: Globe, prop: "site", value: "khemirinourportfolio.vercel.app", href: profile.site },
+    { icon: Trophy, prop: "kaggle", value: "kaggle.com/khmirinourelwoujoud", href: profile.kaggle },
+    {
+      icon: FileText,
+      prop: "cv",
+      value: "télécharger le CV (PDF)",
+      href: CV_URL,
+      download: "CV-Khemiri-Nour-Elwoujoud.pdf",
+    },
+    { icon: MapPin, prop: "localisation", value: profile.location },
+  ];
+  return (
+    <div className="mx-auto max-w-3xl px-6 py-12 md:px-10">
+      <p className="text-code-comment">{"/* contact.css */"}</p>
+      <p className="mt-4 text-code-fn">
+        .contact <span className="text-muted-foreground">{"{"}</span>
+      </p>
+      <div className="mt-4 space-y-2 pl-4 md:pl-8">
+        {rows.map((r) => (
+          <div
+            key={r.prop}
+            className="flex flex-wrap items-center gap-3 rounded-sm border border-border bg-card px-4 py-3"
+          >
+            <r.icon className="size-4 text-pink" />
+            <span className="text-xs text-code-key">--{r.prop}:</span>
+            {r.href ? (
+              <a
+                href={r.href}
+                download={r.download}
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm text-code-string underline-offset-4 hover:underline"
+              >
+                {r.value}
+              </a>
+            ) : (
+              <span className="text-sm text-code-string">{r.value}</span>
+            )}
+            <span className="text-muted-foreground">;</span>
+          </div>
+        ))}
+      </div>
+      <p className="mt-4 text-muted-foreground">{"}"}</p>
+
+      {/*
+        Formulaire de contact via Formspree (gratuit) : crée un formulaire sur
+        https://formspree.io, remplace FORM_ID ci-dessous par le tien.
+        Sans ça, seul le mailto ci-dessus fonctionne (ce qui n'ouvre pas
+        d'application mail sur tous les appareils).
+      */}
+      <div className="mt-10 rounded-sm border border-border bg-card p-5">
+        <p className="text-xs text-code-comment">{"// envoyer un message directement"}</p>
+        <form
+          action="https://formspree.io/f/xzezodoq"
+          method="POST"
+          className="mt-4 space-y-3"
+        >
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div>
+              <label htmlFor="contact-name" className="mb-1 block text-[11px] text-muted-foreground">
+                Nom
+              </label>
+              <input
+                id="contact-name"
+                name="name"
+                type="text"
+                required
+                className="w-full rounded-sm border border-border bg-editor px-3 py-2 text-sm text-foreground outline-none focus:border-pink"
+              />
+            </div>
+            <div>
+              <label htmlFor="contact-email" className="mb-1 block text-[11px] text-muted-foreground">
+                Email
+              </label>
+              <input
+                id="contact-email"
+                name="email"
+                type="email"
+                required
+                className="w-full rounded-sm border border-border bg-editor px-3 py-2 text-sm text-foreground outline-none focus:border-pink"
+              />
+            </div>
+          </div>
+          <div>
+            <label htmlFor="contact-message" className="mb-1 block text-[11px] text-muted-foreground">
+              Message
+            </label>
+            <textarea
+              id="contact-message"
+              name="message"
+              rows={4}
+              required
+              className="w-full resize-none rounded-sm border border-border bg-editor px-3 py-2 text-sm text-foreground outline-none focus:border-pink"
+            />
+          </div>
+          <button
+            type="submit"
+            className="rounded-sm bg-primary px-4 py-2 text-xs text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            Envoyer le message
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 
 export function AboutPane() {
   return (
@@ -378,124 +497,6 @@ export function ProjectsPane() {
             )}
           </div>
         ))}
-      </div>
-    </div>
-  );
-}
-export function ContactPane() {
-  const rows: {
-    icon: typeof Mail;
-    prop: string;
-    value: string;
-    href?: string;
-    download?: string;
-  }[] = [
-    { icon: Mail, prop: "email", value: profile.email, href: `mailto:${profile.email}` },
-    { icon: Phone, prop: "téléphone", value: profile.phone, href: `tel:+21622880524` },
-    { icon: Github, prop: "github", value: "github.com/khemirinour", href: profile.github },
-    { icon: Linkedin, prop: "linkedin", value: "nour-woujoud-khémiri", href: profile.linkedin },
-    { icon: Globe, prop: "site", value: "khemirinourportfolio.vercel.app", href: profile.site },
-    { icon: Trophy, prop: "kaggle", value: "kaggle.com/khmirinourelwoujoud", href: profile.kaggle },
-    {
-      icon: FileText,
-      prop: "cv",
-      value: "télécharger le CV (PDF)",
-      href: CV_URL,
-      download: "CV-Khemiri-Nour-Elwoujoud.pdf",
-    },
-    { icon: MapPin, prop: "localisation", value: profile.location },
-  ];
-  return (
-    <div className="mx-auto max-w-3xl px-6 py-12 md:px-10">
-      <p className="text-code-comment">{"/* contact.css */"}</p>
-      <p className="mt-4 text-code-fn">
-        .contact <span className="text-muted-foreground">{"{"}</span>
-      </p>
-      <div className="mt-4 space-y-2 pl-4 md:pl-8">
-        {rows.map((r) => (
-          <div
-            key={r.prop}
-            className="flex flex-wrap items-center gap-3 rounded-sm border border-border bg-card px-4 py-3"
-          >
-            <r.icon className="size-4 text-pink" />
-            <span className="text-xs text-code-key">--{r.prop}:</span>
-            {r.href ? (
-              <a
-                href={r.href}
-                download={r.download}
-                target="_blank"
-                rel="noreferrer"
-                className="text-sm text-code-string underline-offset-4 hover:underline"
-              >
-                {r.value}
-              </a>
-            ) : (
-              <span className="text-sm text-code-string">{r.value}</span>
-            )}
-            <span className="text-muted-foreground">;</span>
-          </div>
-        ))}
-      </div>
-      <p className="mt-4 text-muted-foreground">{"}"}</p>
-
-      {/*
-        Formulaire de contact via expériences, compétences et contact, dans une interface façon éditeur de code.pree (gratuit) : crée un formulaire sur
-        https://expériences, compétences et contact, dans une interface façon éditeur de code.pree.io, remplace FORM_ID ci-dessous par le tien.
-        Sans ça, seul le mailto ci-dessus fonctionne (ce qui n'ouvre pas
-        d'application mail sur tous les appareils).
-      */}
-      <div className="mt-10 rounded-sm border border-border bg-card p-5">
-        <p className="text-xs text-code-comment">{"// envoyer un message directement"}</p>
-        <form
-          action="https://expériences, compétences et contact, dans une interface façon éditeur de code.pree.io/f/xzezodoq"
-          method="POST"
-          className="mt-4 space-y-3"
-        >
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div>
-              <label htmlFor="contact-name" className="mb-1 block text-[11px] text-muted-foreground">
-                Nom
-              </label>
-              <input
-                id="contact-name"
-                name="name"
-                type="text"
-                required
-                className="w-full rounded-sm border border-border bg-editor px-3 py-2 text-sm text-foreground outline-none focus:border-pink"
-              />
-            </div>
-            <div>
-              <label htmlFor="contact-email" className="mb-1 block text-[11px] text-muted-foreground">
-                Email
-              </label>
-              <input
-                id="contact-email"
-                name="email"
-                type="email"
-                required
-                className="w-full rounded-sm border border-border bg-editor px-3 py-2 text-sm text-foreground outline-none focus:border-pink"
-              />
-            </div>
-          </div>
-          <div>
-            <label htmlFor="contact-message" className="mb-1 block text-[11px] text-muted-foreground">
-              Message
-            </label>
-            <textarea
-              id="contact-message"
-              name="message"
-              rows={4}
-              required
-              className="w-full resize-none rounded-sm border border-border bg-editor px-3 py-2 text-sm text-foreground outline-none focus:border-pink"
-            />
-          </div>
-          <button
-            type="submit"
-            className="rounded-sm bg-primary px-4 py-2 text-xs text-primary-foreground transition-opacity hover:opacity-90"
-          >
-            Envoyer le message
-          </button>
-        </form>
       </div>
     </div>
   );
