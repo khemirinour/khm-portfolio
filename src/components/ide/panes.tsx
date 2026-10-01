@@ -181,6 +181,29 @@ export function HomePane({ onOpen }: { onOpen: (f: string) => void }) {
   );
 }
 export function ContactPane() {
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // empêche la navigation/rechargement de page par défaut du <form>
+    const form = e.currentTarget;
+    setStatus("sending");
+    try {
+      const res = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        setStatus("success");
+        form.reset();
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
   const rows: {
     icon: typeof Mail;
     prop: string;
@@ -247,6 +270,7 @@ export function ContactPane() {
         <form
           action="https://formspree.io/f/xzezodoq"
           method="POST"
+          onSubmit={handleSubmit}
           className="mt-4 space-y-3"
         >
           <div className="grid gap-3 sm:grid-cols-2">
@@ -287,12 +311,29 @@ export function ContactPane() {
               className="w-full resize-none rounded-sm border border-border bg-editor px-3 py-2 text-sm text-foreground outline-none focus:border-pink"
             />
           </div>
-          <button
-            type="submit"
-            className="rounded-sm bg-primary px-4 py-2 text-xs text-primary-foreground transition-opacity hover:opacity-90"
-          >
-            Envoyer le message
-          </button>
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="rounded-sm bg-primary px-4 py-2 text-xs text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {status === "sending" ? "Envoi en cours…" : "Envoyer le message"}
+            </button>
+            {status === "success" && (
+              <span className="text-xs text-code-comment">
+                ✓ Message envoyé, merci ! Je reviens vers toi rapidement.
+              </span>
+            )}
+            {status === "error" && (
+              <span className="text-xs text-destructive">
+                ✗ Échec de l'envoi. Réessaie, ou écris-moi directement à{" "}
+                <a href={`mailto:${profile.email}`} className="underline-offset-4 hover:underline">
+                  {profile.email}
+                </a>
+                .
+              </span>
+            )}
+          </div>
         </form>
       </div>
     </div>
@@ -453,7 +494,7 @@ export function ProjectsPane() {
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
         {projects.map((e, i) => (
           <div
-            key={e.company}
+            key={e.role}
             className="rounded-sm border border-border bg-card p-5"
           >
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -462,15 +503,11 @@ export function ProjectsPane() {
             </div>
 
             <h3 className="mt-3 text-sm text-foreground">
-              {e.company}
+              {e.role}
             </h3>
 
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
               {e.summary}
-            </p>
-
-            <p className="mt-2 text-xs text-code-comment">
-              {e.period}
             </p>
 
             <div className="mt-4 flex flex-wrap items-center gap-2">
