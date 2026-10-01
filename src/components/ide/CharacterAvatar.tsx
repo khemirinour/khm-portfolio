@@ -1,27 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-/**
- * CharacterAvatar — portrait qui "regarde" le curseur.
- *
- * Fonctionnement :
- * - 64 frames WebP réelles (extraites de la vidéo source avec ffmpeg, voir
- *   scripts/extract-frames), couvrant une rotation continue de la tête à
- *   ~5.6° d'écart chacune, + une frame center.webp (regard caméra neutre).
- * - Aucun <video> n'est lu/seeké au runtime (trop de lag / gel sur un MP4
- *   généré à 1 seul keyframe) : uniquement des <img> préchargées dessinées
- *   sur un <canvas>.
- * - Le corps/la page ne bougent jamais : ni perspective, ni rotateX/Y nulle
- *   part. Seule l'image affichée dans le canvas change.
- * - Un seul frame net dessiné à 100% d'opacité par tick (pas de fondu entre
- *   deux frames = pas de "double visage").
- * - Zone morte au centre : quand le curseur est proche du portrait, elle
- *   regarde droit dans les yeux (center.webp) plutôt que de trembler entre
- *   deux frames voisines.
- * - Désactivé sur les écrans tactiles (pas de curseur persistant) : affiche
- *   simplement le portrait neutre, sans canvas ni écouteurs.
- */
-
 const FRAME_COUNT = 64;
 const ANGLE_OFFSET = 45; // bucket 0 (f00.webp) correspond à ~45° (haut-droite)
 const STEP = 360 / FRAME_COUNT; // ~5.625°

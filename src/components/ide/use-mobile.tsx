@@ -18,12 +18,6 @@ export function useIsMobile() {
   return !!isMobile;
 }
 
-/**
- * Respecte le réglage "réduire les animations" de l'utilisateur (accessibilité
- * + performance : évite de faire tourner des animations pour rien sur les
- * appareils qui l'ont explicitement demandé, ou qui tournent en mode économie
- * d'énergie où l'OS force souvent prefers-reduced-motion).
- */
 export function usePrefersReducedMotion() {
   const [reduced, setReduced] = React.useState(false);
 
