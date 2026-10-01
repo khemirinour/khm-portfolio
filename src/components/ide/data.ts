@@ -1,7 +1,7 @@
 export const profile = {
   first: "Khémiri",
   last: "Nour Elwoujoud",
-  tags: ["Full Stack Developer", "Passionnée par l’IA et le Machine Learning"],
+  tags: ["Full Stack Developer", "Passionnée par l'IA et le Machine Learning"],
   typed: "Des systèmes intelligents, sûrs et scalables",
   location: "Mahdia, Tunisie",
   email: "Khemirinour334@gmail.com",
@@ -21,7 +21,7 @@ export const stats = [
   { value: "∞", label: "CURIOSITÉ" },
 ];
 
-export const skills: { key: string; items: string[] }[] = [
+export const skills: { key: string; category?: string; items: string[] }[] = [
   {
     key: "developpement",
     items: [
@@ -151,7 +151,6 @@ export const experiences = [
       "Pipeline d'évaluation automatisé de la robustesse adversariale.",
     ],
     stack: ["Python", "PyTorch", "TensorFlow", "Docker"],
-    // TODO: remplace par le vrai lien du dépôt si le projet est public
     repo: "https://github.com/khemirinour/Detection-Attaques-Adversariales-pour-les-Mod-les-de-Classification-d-Images",
   },
   {
@@ -166,7 +165,7 @@ export const experiences = [
       "Pipeline CI/CD complet (Docker Compose, GitLab, Prometheus, Grafana, SonarQube), réduisant le temps de déploiement de 40 %.",
     ],
     stack: [".NET Core", "MySQL", "CI/CD", "Bootstrap"],
-    repo: " https://github.com/khemirinour/Planification-du-Temps-pour-Clinique",
+    repo: "https://github.com/khemirinour/Planification-du-Temps-pour-Clinique",
   },
   {
     company: "Datasphera",
@@ -209,7 +208,6 @@ export const projects = [
       "Pipeline d'évaluation automatisé de la robustesse adversariale.",
     ],
     stack: ["Python", "Flask", "TensorFlow", "Docker", "ngrok"],
-    // TODO: remplace par le vrai lien du dépôt si le projet est public
     repo: "https://github.com/khemirinour/Detection-Attaques-Adversariales-pour-les-Mod-les-de-Classification-d-Images",
   },
   {
@@ -221,7 +219,7 @@ export const projects = [
       "Pipeline CI/CD complet (Docker Compose, GitLab, Prometheus, Grafana, SonarQube), réduisant le temps de déploiement de 40 %.",
     ],
     stack: [".NET Core", "MySQL", "GitLab CI", "Grafana"],
-    repo: " https://github.com/khemirinour/Planification-du-Temps-pour-Clinique",
+    repo: "https://github.com/khemirinour/Planification-du-Temps-pour-Clinique",
   },
   {
     role: "Développeuse Python — PFE Licence",
