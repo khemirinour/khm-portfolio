@@ -1,10 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import { ChevronRight, TerminalSquare, X } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  ChevronUp,
+  Plus,
+  TerminalSquare,
+  Trash2,
+  X,
+} from "lucide-react";
 import { FileIcon } from "./FileIcon";
-import { profile } from "./data";
+import { education, experiences, profile, skills } from "./data";
 
+type Tone = "muted" | "error" | "ok";
 type Line =
-  | { kind: "text"; text: string; tone?: "muted" | "error" | "ok" }
+  | { kind: "text"; text: string; tone?: Tone }
   | { kind: "input"; text: string }
   | { kind: "files"; files: string[] };
 
@@ -15,26 +24,39 @@ const HELP = [
   "  open <fichier>  ouvre un fichier dans l'éditeur",
   "  cat <fichier>   idem open",
   "  whoami          à propos de moi",
-  "  pwd             répertoire courant",
-  "  date            date du jour",
+  "  skills          liste des compétences",
+  "  git log         historique du parcours",
+  "  npm run dev     lance le portfolio",
+  "  contact         coordonnées",
+  "  github | linkedin | cv",
+  "  pwd | date | echo <texte>",
   "  clear           efface le terminal",
+  "  exit            ferme le terminal",
 ];
+
+const text = (t: string, tone?: Tone): Line =>
+  tone ? { kind: "text", text: t, tone } : { kind: "text", text: t };
 
 export function Terminal({
   files,
   onOpen,
   onClose,
   compact = false,
+  queued,
 }: {
   files: string[];
   onOpen: (f: string) => void;
   onClose: () => void;
   /** Réduit la hauteur du terminal (utile sur mobile pour laisser plus de place au contenu). */
   compact?: boolean;
+  /** Commande envoyée depuis l'extérieur (Run & Debug, menus…) ; `id` change à chaque envoi. */
+  queued?: { id: number; cmd: string } | undefined;
 }) {
+  const [tab, setTab] = useState<"terminal" | "problems" | "output">("terminal");
+  const [tall, setTall] = useState(false);
   const [lines, setLines] = useState<Line[]>([
-    { kind: "text", text: `Bienvenue dans le portfolio de ${profile.first} ${profile.last}.`, tone: "ok" },
-    { kind: "text", text: "Tapez « help » puis Entrée. Astuce : cliquez sur un fichier listé.", tone: "muted" },
+    text(`Bienvenue dans le portfolio de ${profile.first} ${profile.last}.`, "ok"),
+    text("Tapez « help » puis Entrée. Astuce : cliquez sur un fichier listé.", "muted"),
   ]);
   const [value, setValue] = useState("");
   const [history, setHistory] = useState<string[]>([]);
@@ -48,6 +70,11 @@ export function Terminal({
 
   const push = (...l: Line[]) => setLines((prev) => [...prev, ...l]);
 
+  const openUrl = (url: string, label: string) => {
+    window.open(url, "_blank", "noopener,noreferrer");
+    push(text(`Ouverture de ${label}…`, "ok"));
+  };
+
   const run = (raw: string) => {
     const cmd = raw.trim();
     push({ kind: "input", text: cmd });
@@ -57,13 +84,34 @@ export function Terminal({
 
     const [name = "", ...args] = cmd.split(/\s+/);
     const arg = args.join(" ");
+    const full = cmd.toLowerCase().replace(/\s+/g, " ");
     const resolve = (a: string) =>
       files.find((f) => f.toLowerCase() === a.toLowerCase()) ??
       files.find((f) => f.toLowerCase().startsWith(a.toLowerCase()));
 
+    if (full.startsWith("git log")) {
+      const log = [
+        ...experiences.map((e) => `feat: ${e.company} — ${e.period}`),
+        ...education.map((e) => `docs: ${e.degree} — ${e.period}`),
+      ];
+      push(...log.map((l, i) => text(`${(0xa1f3c2 + i * 40991).toString(16).slice(0, 7)}  ${l}`)));
+      return;
+    }
+    if (full === "npm run dev" || full === "npm start" || full === "bun dev") {
+      push(
+        text("> portfolio@1.0.0 dev", "muted"),
+        text("> vite dev", "muted"),
+        text("  VITE ready in 312 ms", "ok"),
+        text(`  ➜  Local:   ${window.location.origin}/`),
+        text("  ➜  Ouverture de home.tsx…", "muted"),
+      );
+      onOpen("home.tsx");
+      return;
+    }
+
     switch (name.toLowerCase()) {
       case "help":
-        push(...HELP.map((t) => ({ kind: "text" as const, text: t })));
+        push(...HELP.map((t) => text(t)));
         break;
       case "ls":
       case "dir":
@@ -72,46 +120,163 @@ export function Terminal({
       case "open":
       case "cat":
       case "code": {
-        if (!arg) return push({ kind: "text", text: `${name}: nom de fichier manquant`, tone: "error" });
+        if (!arg) return push(text(`${name}: nom de fichier manquant`, "error"));
         const f = resolve(arg);
-        if (!f) return push({ kind: "text", text: `${name}: ${arg} : fichier introuvable`, tone: "error" });
+        if (!f) return push(text(`${name}: ${arg} : fichier introuvable`, "error"));
         onOpen(f);
-        push({ kind: "text", text: `Ouverture de ${f} dans l'éditeur…`, tone: "ok" });
+        push(text(`Ouverture de ${f} dans l'éditeur…`, "ok"));
         break;
       }
       case "whoami":
-        push({ kind: "text", text: `${profile.first} ${profile.last} — ${profile.location}` });
+        push(text(`${profile.first} ${profile.last} — ${profile.location}`));
+        break;
+      case "skills":
+        push(
+          ...skills.map((sk) =>
+            text(
+              `• ${sk.category ?? sk.key} : ${sk.items.slice(0, 6).join(", ")}${sk.items.length > 6 ? "…" : ""}`,
+            ),
+          ),
+        );
+        break;
+      case "contact":
+      case "email":
+        push(text(`✉  ${profile.email}`), text(`☎  ${profile.phone}`));
+        onOpen("contact.css");
+        break;
+      case "github":
+        openUrl(profile.github, "GitHub");
+        break;
+      case "linkedin":
+        openUrl(profile.linkedin, "LinkedIn");
+        break;
+      case "cv":
+        openUrl("/khemiri_nour_elwoujoud.pdf", "CV (PDF)");
         break;
       case "pwd":
-        push({ kind: "text", text: "/home/nour/portfolio/src" });
+        push(text("/home/nour/portfolio/src"));
         break;
       case "date":
-        push({ kind: "text", text: new Date().toLocaleString("fr-FR") });
+        push(text(new Date().toLocaleString("fr-FR")));
+        break;
+      case "echo":
+        push(text(arg));
+        break;
+      case "sudo":
+        push(text("Bien essayé 😏 — permission refusée.", "error"));
+        break;
+      case "exit":
+        onClose();
         break;
       case "clear":
+      case "cls":
         setLines([]);
         break;
       default:
-        push({ kind: "text", text: `commande introuvable : ${name} (essayez « help »)`, tone: "error" });
+        push(text(`commande introuvable : ${name} (essayez « help »)`, "error"));
     }
   };
 
+  // Commande reçue depuis l'extérieur (bouton Run, menu Terminal…)
+  useEffect(() => {
+    if (!queued) return;
+    setTab("terminal");
+    run(queued.cmd);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [queued?.id]);
+
+  const tabs = [
+    { key: "problems", label: "PROBLÈMES", cls: "hidden sm:flex" },
+    { key: "output", label: "SORTIE", cls: "hidden sm:flex" },
+    { key: "terminal", label: "TERMINAL", cls: "flex" },
+  ] as const;
+
+  const iconBtn = "rounded p-0.5 hover:bg-sidebar-active hover:text-foreground";
+
   return (
     <div
-      className={`flex ${compact ? "h-40" : "h-56"} shrink-0 flex-col border-t border-border bg-editor`}
-      onClick={() => inputRef.current?.focus()}
+      className={`flex ${tall ? "h-[55%]" : compact ? "h-40" : "h-56"} shrink-0 flex-col border-t border-border bg-editor`}
+      onClick={() => tab === "terminal" && inputRef.current?.focus()}
     >
       <div className="flex h-8 shrink-0 items-center gap-4 border-b border-border bg-chrome px-3 text-[11px] tracking-[0.15em] text-muted-foreground">
-        <span className="flex items-center gap-2 border-b-2 border-pink pb-1 pt-1 text-foreground">
-          <TerminalSquare className="size-3.5" /> TERMINAL
-        </span>
-        <span className="hidden sm:inline">PROBLÈMES</span>
-        <span className="hidden sm:inline">SORTIE</span>
-        <button onClick={onClose} aria-label="Fermer le terminal" className="ml-auto hover:text-foreground">
-          <X className="size-3.5" />
-        </button>
+        {tabs.map((t) => (
+          <button
+            key={t.key}
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setTab(t.key);
+            }}
+            className={`${t.cls} items-center gap-2 border-b-2 pb-1 pt-1 transition-colors ${
+              tab === t.key
+                ? "border-pink text-foreground"
+                : "border-transparent hover:text-foreground"
+            }`}
+          >
+            {t.key === "terminal" && <TerminalSquare className="size-3.5" />}
+            {t.label}
+          </button>
+        ))}
+        <div className="ml-auto flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+          <button
+            type="button"
+            title="Nouveau terminal"
+            aria-label="Nouveau terminal"
+            onClick={() => {
+              setTab("terminal");
+              setLines([text("Nouveau terminal — tapez « help ».", "muted")]);
+            }}
+            className={iconBtn}
+          >
+            <Plus className="size-3.5" />
+          </button>
+          <button
+            type="button"
+            title="Tuer le terminal"
+            aria-label="Tuer le terminal"
+            onClick={onClose}
+            className={iconBtn}
+          >
+            <Trash2 className="size-3.5" />
+          </button>
+          <button
+            type="button"
+            title={tall ? "Restaurer la taille du panneau" : "Agrandir le panneau"}
+            aria-label={tall ? "Restaurer la taille du panneau" : "Agrandir le panneau"}
+            onClick={() => setTall((t) => !t)}
+            className={`${iconBtn} hidden sm:block`}
+          >
+            {tall ? <ChevronDown className="size-3.5" /> : <ChevronUp className="size-3.5" />}
+          </button>
+          <button
+            type="button"
+            title="Fermer le panneau"
+            aria-label="Fermer le terminal"
+            onClick={onClose}
+            className={iconBtn}
+          >
+            <X className="size-3.5" />
+          </button>
+        </div>
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto px-3 py-2 font-mono text-[12px] leading-6">
+
+      {tab === "problems" && (
+        <div className="flex-1 px-3 py-2 text-[12px] text-muted-foreground">
+          Aucun problème détecté dans l'espace de travail. ✨
+        </div>
+      )}
+
+      {tab === "output" && (
+        <div className="min-h-0 flex-1 overflow-y-auto px-3 py-2 font-mono text-[12px] leading-6 text-muted-foreground">
+          <div>[info] Portfolio chargé — {files.length} fichiers indexés.</div>
+          <div>[info] Thème : Nour Dark</div>
+          <div>[info] Prettier prêt.</div>
+        </div>
+      )}
+
+      <div
+        className={`${tab === "terminal" ? "" : "hidden"} min-h-0 flex-1 overflow-y-auto px-3 py-2 font-mono text-[12px] leading-6`}
+      >
         {lines.map((l, i) => {
           if (l.kind === "input")
             return (
@@ -140,7 +305,7 @@ export function Terminal({
           return (
             <div
               key={i}
-              className={
+              className={`whitespace-pre-wrap ${
                 l.tone === "error"
                   ? "text-destructive"
                   : l.tone === "ok"
@@ -148,7 +313,7 @@ export function Terminal({
                     : l.tone === "muted"
                       ? "text-muted-foreground"
                       : "text-foreground/85"
-              }
+              }`}
             >
               {l.text}
             </div>
